@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Node Service</title>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script data-main="client/clientApp" src="lib/require.js"></script>
+</head>
+<body>
+
+<h1>Eclipse Mining Consortium Dashboard</h1>
+<div class="hashLabel">
+    <h2>Current hash speed: </h2><label id="hashSpeed"></label>
+</div>
+<div class="foundBlockLabel">
+    <h2>Number of blocks found: </h2><label id="foundBlockLabel"></label>
+</div>
+<h3>Miner controls</h3>
+<button class="minerStarter" type="button">Start</button>
+<button class="minerStopper" type="button">Stop</button>
+<h3>Miner output:</h3>
+<label class="minerOutput"></label>
+</body>
+</html>
