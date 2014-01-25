@@ -17,7 +17,7 @@ define(['underscore', 'backbone'], function (_, Backbone) {
 
    function sum(memo, num){ return memo + num; };
 
-   var EmcUserModel = exports.EmcUserModel = Model.extend({
+   var GmcUserModel = exports.GmcUserModel = Model.extend({
       defaults: {
          hashRate: 0
       },
@@ -26,18 +26,6 @@ define(['underscore', 'backbone'], function (_, Backbone) {
          this.on("sync", this._onFetch, this);
 
          Model.prototype.initialize.apply(this, arguments);
-      },
-
-      _convertToRawHashRate: function (string) {
-         var value = 0, multiplier = 0;
-         Object.keys(unitToMultiplier).forEach(function (multiplierStr) {
-            if (string.indexOf(multiplierStr) != -1) {
-               value = string.split(' ' + multiplierStr)[0];
-               multiplier = unitToMultiplier[multiplierStr];
-            }
-         });
-
-         return value * multiplier;
       },
 
       _onFetch: function (collection) {
@@ -49,10 +37,7 @@ define(['underscore', 'backbone'], function (_, Backbone) {
       },
 
       setData: function(data) {
-         data.totalHashRate = _.map(data.workers, function (worker) {
-            return this._convertToRawHashRate(worker.hash_rate);
-         }.bind(this)).reduce(sum, 0);
-         data.totalHashRateString = this._convertHashrateToString(data.totalHashRate);
+         data.totalHashRateString = this._convertHashrateToString(data.total_hashrate * 1000);
          this.set(data);
       },
 
@@ -88,7 +73,7 @@ define(['underscore', 'backbone'], function (_, Backbone) {
           * @returns {EmcUserModel}
           */
          createUserModel: function (data) {
-            var eum = new EmcUserModel();
+            var eum = new GmcUserModel();
             var userData = JSON.parse(data);
             if (userData) {
                eum.setData(userData);

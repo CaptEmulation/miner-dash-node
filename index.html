@@ -2,24 +2,52 @@
 <html>
 <head>
     <title>Node Service</title>
-    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="stylesheet" href="//code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css">
+    <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="//code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
 
     <script src="/socket.io/socket.io.js"></script>
     <script data-main="client/clientApp" src="lib/require.js"></script>
 </head>
 <body>
 
-<h1>Eclipse Mining Consortium Dashboard</h1>
-<div class="hashLabel">
-    <h2>Current hash speed: </h2><label id="hashSpeed"></label>
+<div data-role="page" id="page1">
+    <div data-role="header">
+        <h1>Miner Dashboard</h1>
+    </div>
+    <div role="main" class="ui-content">
+        <div data-role="collapsible" data-collapsed="false">
+            <h3>Eclipse Mining Consortium</h3>
+            <ul data-role="listview">
+                <li><label class="labelTitle">Current hash speed: </label><label id="emcHashSpeed" class = "labelValue"></label></li>
+                <li><label class="labelTitle">Time since last block: </label><label id="emcLastDuration" class = "labelValue"></label></li>
+                <li><label class="labelTitle">Confirmed Rewards: </label><label id="emcConfirmedRewards" class = "labelValue"></label></li>
+                <li><label class="labelTitle">Unconfirmed Rewards: </label><label id="emcUnconfirmedRewards" class = "labelValue"></label></li>
+                <li><label class="labelTitle">Estimated Block Reward: </label><label id="emcEstimatedRewards" class = "labelValue"></label></li>
+            </ul>
+        </div>
+        <div data-role="collapsible" data-collapsed="false">
+            <h3>Give Me Coins</h3>
+            <ul data-role="listview">
+                <li><label class="labelTitle">Current hash speed: </label><label id="gmcHashSpeed" class = "labelValue"></label></li>
+                <li><label class="labelTitle">Confirmed Rewards: </label><label id="gmcConfirmedRewards" class = "labelValue"></label></li>
+                <li><label class="labelTitle">Estimated Block Reward: </label><label id="gmcEstimatedRewards" class = "labelValue"></label></li>
+            </ul>
+        </div>
+    </div>
 </div>
-<div class="foundBlockLabel">
-    <h2>Number of blocks found: </h2><label id="foundBlockLabel"></label>
-</div>
-<h3>Miner controls</h3>
-<button class="minerStarter" type="button">Start</button>
-<button class="minerStopper" type="button">Stop</button>
-<h3>Miner output:</h3>
-<label class="minerOutput"></label>
+
+
+
+
+
+
+<!--<h3>Miner controls</h3>-->
+<!--<button class="minerStarter" type="button">Start</button>-->
+<!--<button class="minerStopper" type="button">Stop</button>-->
+<!--<h3>Miner output:</h3>-->
+<!--<label class="minerOutput"></label>-->
+
 </body>
 </html>

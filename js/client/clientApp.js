@@ -21,38 +21,38 @@ require.config({
    }
 });
 
-requirejs(['jquery', './client/emcDataMgr.js', 'underscore', 'backbone', ''], function ($, emcDataMgr, _, Backbone) {
+requirejs(['jquery', './client/emcDataMgr.js',  './client/gmcDataMgr.js', 'underscore', 'backbone', ''], function ($, emcDataMgr, gmcDataMgr, _, Backbone) {
 
    var socket = io.connect('http://localhost:8181');
 
 
-   socket.on("update.user", function (data) {
-      var userModel = emcDataMgr.Service().createUserModel();
-      var userData = JSON.parse(data);
-      if (userData) {
-         userModel.setData(userData);
-      }
-      $('label#hashSpeed').html(userModel.get('totalHashRateString'));
+   socket.on("update.emc.user", function (data) {
+      var emcModel = emcDataMgr.Service().createUserModel(data);
+      $('label#emcHashSpeed').html(emcModel.get('totalHashRateString'));
+      $('label#emcConfirmedRewards').html(emcModel.get('data').user.confirmed_rewards + ' BTC');
+      $('label#emcUnconfirmedRewards').html(emcModel.get('data').user.unconfirmed_rewards + ' BTC');
+      $('label#emcEstimatedRewards').html(emcModel.get('data').user.estimated_rewards + ' BTC');
    });
 
-   var lastPool = new Backbone.Model({
-      round_shares: 0
+   socket.on("update.gmc", function (data) {
+      var gmcModel = gmcDataMgr.Service().createUserModel(data);
+      $('label#gmcHashSpeed').html(gmcModel.get('totalHashRateString'));
+      $('label#gmcConfirmedRewards').html(gmcModel.get('confirmed_rewards') + ' BTC');
+      $('label#gmcEstimatedRewards').html(gmcModel.get('round_estimate') + ' BTC');
    });
 
-   var numBlocks = 0;
-   $('label#foundBlockLabel').html(numBlocks);
-
-   socket.on('update.pool', function (data) {
+   socket.on('update.emc.pool', function (data) {
       var poolData = JSON.parse(data);
       if (poolData) {
          var newPool = new Backbone.Model(poolData);
-         if (newPool.get('round_shares') < lastPool.get('round_shares')) {
-            // New Block!!
-            $('label#foundBlockLabel').html(numBlocks++);
+         if (newPool.get('round_duration')) {
+            // round duration
+            $('label#emcLastDuration').html(newPool.get('round_duration'));
          }
       }
 
    });
+
 
    socket.on('miner.stdout', function (msg) {
       $('label.minerOutput').append(msg.data.replace(/\n/g, '<br />'));

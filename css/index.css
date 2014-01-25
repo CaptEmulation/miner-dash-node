@@ -3,5 +3,22 @@ div.hashLabel {
 }
 
 div.foundLabelBlock {
-    display: inline
+    display: inline;
+}
+
+.dataField {
+    clear: left;
+}
+
+label {
+    float: left;
+}
+
+label.labelTitle {
+    margin-right: 2.0em;
+}
+
+label.labelValue {
+    float: right;
+    text-align: 'left'
 }

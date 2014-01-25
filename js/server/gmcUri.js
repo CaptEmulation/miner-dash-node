@@ -6,14 +6,12 @@
 var globalConfig = require('../../config.js').config;
 
 var actionTypes = exports.actionTypes = {
-   USER: 'userstats',
-   POOL: 'poolstats',
-   BLOCK: 'blockstats'
+   BTC: 'api-btc'
 };
 
-var poolType = exports.poolType = 'eclipsemc';
+var poolType = exports.poolType = 'give-me-coins';
 
-function getEmcPoolConfig(config) {
+function getGmcPoolConfig(config) {
    var returnPool = null;
    config.pools.forEach(function (pool) {
       if (pool.type === poolType) {
@@ -23,7 +21,7 @@ function getEmcPoolConfig(config) {
    return returnPool;
 };
 
-var config = getEmcPoolConfig(globalConfig);
+var config = getGmcPoolConfig(globalConfig);
 
 var createUri = exports.createUri = function (options) {
 
@@ -31,19 +29,12 @@ var createUri = exports.createUri = function (options) {
       return new Error ("Missing required options");
    }
 
-   return 'https://eclipsemc.com/api.php?key=' + options.apiKey + '&action=' + options.action;
+   return 'https://give-me-coins.com/pool/' + options.action + '?api_key=' + options.apiKey;
 };
 
-exports.defaultUserUri = function () {
+exports.defaultBtcUri = function () {
    return createUri({
       apiKey: config.apiKey,
-      action: actionTypes.USER
-   });
-};
-
-exports.defaultPoolUri = function () {
-   return createUri({
-      apiKey: config.apiKey,
-      action: actionTypes.POOL
+      action: actionTypes.BTC
    });
 };
